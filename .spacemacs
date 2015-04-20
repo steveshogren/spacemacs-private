@@ -7,7 +7,9 @@
   (setq-default
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (ie. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '()
+   dotspacemacs-configuration-layer-path '(
+                                           "~/private/"
+                                           )
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
@@ -16,7 +18,8 @@
      ;; Example of useful layers you may want to use right away
      ;; Uncomment a layer name and press C-c C-c to install it
      ;; --------------------------------------------------------
-      auto-completion
+     (auto-completion :variables
+                      auto-completion-enable-company-help-tooltip t)
       better-defaults
       (git :variables
            git-gutter-use-fringe t)
@@ -25,6 +28,8 @@
       syntax-checking
       clojure
       themes-megapack
+      cider-settings
+      paredit-evil-keys
       ;; ujelly
       ;; twilight-anti-bright
       ;; tronesque
@@ -66,8 +71,8 @@ before layers configuration."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(solarized-light
-                         solarized-dark
+   dotspacemacs-themes '(solarized-dark
+                         solarized-light
                          leuven
                          monokai
                          zenburn)
@@ -147,6 +152,15 @@ before layers configuration."
   "Configuration function.
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
+
+ (desktop-save-mode 1)
+ (golden-ratio-mode 1)
+
+ ;;(global-set-key (kbd "<f2>") 'magit-status)
+
+ (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
+ (define-key helm-find-files-map (kbd "C-h") 'helm-find-files-up-one-level)
+ (define-key helm-find-files-map (kbd "C-l") 'helm-execute-persistent-action)
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
