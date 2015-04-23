@@ -20,22 +20,23 @@
      ;; --------------------------------------------------------
      (auto-completion :variables
                       auto-completion-enable-company-help-tooltip t)
-      better-defaults
-      (git :variables
-           git-gutter-use-fringe t)
-      markdown
-      org
-      syntax-checking
-      clojure
-      themes-megapack
-      cider-settings
-      paredit-evil-keys
-      ;; ujelly
-      ;; twilight-anti-bright
-      ;; tronesque
-      ;; tango2
-      ;; sanityinc-tomorrow-night
-      ;;purple-haze
+     better-defaults
+     (git :variables
+          git-gutter-use-fringe t)
+     markdown
+     org
+     syntax-checking
+     clojure
+     themes-megapack
+     cider-settings
+     paredit-evil-keys
+     haskell
+     ;; ujelly
+     ;; twilight-anti-bright
+     ;; tronesque
+     ;; tango2
+     ;; sanityinc-tomorrow-night
+     ;;purple-haze
      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -71,8 +72,7 @@ before layers configuration."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(sanityinc-tomorrow-bright
-                         solarized-dark
+   dotspacemacs-themes '(solarized-dark
                          solarized-light
                          leuven
                          monokai
@@ -154,15 +154,15 @@ before layers configuration."
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
 
- (desktop-save-mode 1)
- (golden-ratio-mode 1)
+  (desktop-save-mode 1)
+  (golden-ratio-mode 1)
 
- ;;(global-set-key (kbd "<f2>") 'magit-status)
+  (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
+  
+  (define-key helm-find-files-map (kbd "C-h") 'helm-find-files-up-one-level)
+  (define-key helm-find-files-map (kbd "C-l") 'helm-execute-persistent-action)
 
- (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
- (define-key helm-find-files-map (kbd "C-h") 'helm-find-files-up-one-level)
- (define-key helm-find-files-map (kbd "C-l") 'helm-execute-persistent-action)
-)
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
