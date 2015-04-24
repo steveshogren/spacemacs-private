@@ -147,6 +147,8 @@ before layers configuration."
    dotspacemacs-default-package-repository nil
    )
   ;; User initialization goes here
+	(autoload 'haskell-indentation-enable-show-indentations "haskell-indentation")
+	(autoload 'haskell-indentation-disable-show-indentations "haskell-indentation")
   )
 
 (defun dotspacemacs/config ()
@@ -159,8 +161,12 @@ layers configuration."
 
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
   
-  (define-key helm-find-files-map (kbd "C-h") 'helm-find-files-up-one-level)
-  (define-key helm-find-files-map (kbd "C-l") 'helm-execute-persistent-action)
+  (add-hook 'helm-before-initialize-hook
+            (lambda ()
+              (define-key helm-find-files-map (kbd "C-h") 'helm-find-files-up-one-level)
+              (define-key helm-find-files-map (kbd "C-l") 'helm-execute-persistent-action)
+              ))
+
 
   )
 
