@@ -31,6 +31,9 @@
      cider-settings
      paredit-evil-keys
      haskell
+     (colors :variables
+             ;;colors-enable-rainbow-identifiers t
+             colors-enable-nyan-cat-progress-bar t)
      ;; ujelly
      ;; twilight-anti-bright
      ;; tronesque
@@ -72,7 +75,8 @@ before layers configuration."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(solarized-dark
+   dotspacemacs-themes '(sanityinc-tomorrow-bright
+                         solarized-dark
                          solarized-light
                          leuven
                          monokai
@@ -147,8 +151,9 @@ before layers configuration."
    dotspacemacs-default-package-repository nil
    )
   ;; User initialization goes here
-	(autoload 'haskell-indentation-enable-show-indentations "haskell-indentation")
-	(autoload 'haskell-indentation-disable-show-indentations "haskell-indentation")
+  (autoload 'haskell-indentation-enable-show-indentations "haskell-indentation")
+  (autoload 'haskell-indentation-disable-show-indentations "haskell-indentation")
+  (add-to-list 'exec-path "~/.cabal/bin/")
   )
 
 (defun dotspacemacs/config ()
@@ -158,15 +163,15 @@ layers configuration."
 
   (desktop-save-mode 1)
   (golden-ratio-mode 1)
+  (desktop-read)
 
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
-  
+
   (add-hook 'helm-before-initialize-hook
             (lambda ()
               (define-key helm-find-files-map (kbd "C-h") 'helm-find-files-up-one-level)
               (define-key helm-find-files-map (kbd "C-l") 'helm-execute-persistent-action)
               ))
-
 
   )
 
