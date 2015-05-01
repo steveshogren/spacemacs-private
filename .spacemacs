@@ -167,10 +167,22 @@ layers configuration."
 
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
 
+  (defun helm-do-grep-recursive (&optional non-recursive)
+    "Like `helm-do-grep', but greps recursively by default."
+    (interactive "P")
+    (let* ((current-prefix-arg (not non-recursive))
+           (helm-current-prefix-arg non-recursive))
+      (call-interactively 'helm-do-grep)))
   (add-hook 'helm-before-initialize-hook
             (lambda ()
+              ;; instead I've found that one can save a grep session with
+              ;; C-x C-s, then go to files using C-up/down when in insert
+              ;;(define-key helm-grep-mode-map (kbd "RET") 'helm-grep-mode-jump-other-window)
               (define-key helm-find-files-map (kbd "C-h") 'helm-find-files-up-one-level)
               (define-key helm-find-files-map (kbd "C-l") 'helm-execute-persistent-action)
+              (define-key global-map (kbd "C-S-f") 'helm-do-grep-recursive)
+              (define-key global-map (kbd "C-x C-f") 'helm-find-files)
+              (define-key global-map (kbd "C-x b") 'helm-mini)
               ))
 
   )
