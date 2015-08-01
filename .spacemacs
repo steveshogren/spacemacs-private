@@ -31,9 +31,11 @@
      cider-settings
      paredit-evil-keys
      haskell
-     (colors :variables
+     ess
+     (colors ;;:variables
              ;;colors-enable-rainbow-identifiers t
-             colors-enable-nyan-cat-progress-bar t)
+             ;;colors-enable-nyan-cat-progress-bar t
+             )
      ;; ujelly
      ;; twilight-anti-bright
      ;; tronesque
