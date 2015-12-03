@@ -32,6 +32,8 @@
      paredit-evil-keys
      haskell
      ess
+     fsharp
+     racket
      (colors ;;:variables
              ;;colors-enable-rainbow-identifiers t
              ;;colors-enable-nyan-cat-progress-bar t
@@ -88,7 +90,7 @@ before layers configuration."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 10
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -125,7 +127,7 @@ before layers configuration."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup 't
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'.
@@ -171,6 +173,23 @@ layers configuration."
 
   (defun helm-do-grep-recursive (&optional non-recursive)
     "Like `helm-do-grep', but greps recursively by default."
+    (grep-find-ignored-directories)
+
+    (eval-after-load 'grep
+      '(progn
+         (add-to-list 'grep-find-ignored-directories ".git")
+         (add-to-list 'grep-find-ignored-directories "target")
+         (add-to-list 'grep-find-ignored-directories "node_modules")
+         (add-to-list 'grep-find-ignored-directories "gen")
+         (add-to-list 'grep-find-ignored-files "*.jar")
+         (add-to-list 'grep-find-ignored-files "angular.js")
+         (add-to-list 'grep-find-ignored-files "bootstrap.js")
+         (add-to-list 'grep-find-ignored-files "ng-grid.js")
+         (add-to-list 'grep-find-ignored-files "cal-heatmap.js")
+         (add-to-list 'grep-find-ignored-files "nrcerts")
+         (add-to-list 'grep-find-ignored-files "*.dump")
+         ))
+
     (interactive "P")
     (let* ((current-prefix-arg (not non-recursive))
            (helm-current-prefix-arg non-recursive))
