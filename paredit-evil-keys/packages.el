@@ -24,7 +24,7 @@ which require an initialization must be listed explicitly in the list.")
     :defer t
     :init
     (progn
-      (add-to-list 'load-path "~/.emacs.d/private/paredit-evil-keys")
+      (add-to-list 'load-path "~/private/paredit-evil-keys")
       (require 'evil-paredit)
       (add-hook 'paredit-mode-hook 'evil-paredit-mode)
 
