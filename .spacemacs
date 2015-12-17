@@ -34,6 +34,7 @@
      ess
      fsharp
      racket
+     react
      (colors ;;:variables
              ;;colors-enable-rainbow-identifiers t
              ;;colors-enable-nyan-cat-progress-bar t
@@ -143,7 +144,7 @@ before layers configuration."
    ;; point when it reaches the top or bottom of the screen.
    dotspacemacs-smooth-scrolling nil
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
-   dotspacemacs-smartparens-strict-mode nil
+   dotspacemacs-smartparens-strict-mode t
    ;; If non nil advises quit functions to keep server open when quitting.
    dotspacemacs-persistent-server nil
    ;; List of search tool executable names. Spacemacs uses the first installed
@@ -170,6 +171,9 @@ layers configuration."
   (desktop-read)
 
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
+
+  ;;(define-key l-state-map (kbd ")") 'paredit-forward)
+  ;;(define-key evil-normal-state-map (kbd "(") 'paredit-backward)
 
   (defun helm-do-grep-recursive (&optional non-recursive)
     "Like `helm-do-grep', but greps recursively by default."
