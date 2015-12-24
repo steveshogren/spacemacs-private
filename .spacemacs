@@ -28,7 +28,7 @@
      syntax-checking
      clojure
      themes-megapack
-     cider-settings
+     ;; cider-settings
      paredit-evil-keys
      haskell
      ess
@@ -121,14 +121,14 @@ before layers configuration."
    dotspacemacs-loading-progress-bar t
    ;; If non nil the frame is fullscreen when Emacs starts up.
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-at-startup 't
    ;; If non nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX."
    dotspacemacs-fullscreen-use-non-native nil
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup 't
+   dotspacemacs-maximized-at-startup t
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'.
@@ -142,7 +142,7 @@ before layers configuration."
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters the
    ;; point when it reaches the top or bottom of the screen.
-   dotspacemacs-smooth-scrolling nil
+   dotspacemacs-smooth-scrolling t
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    dotspacemacs-smartparens-strict-mode t
    ;; If non nil advises quit functions to keep server open when quitting.
@@ -175,36 +175,50 @@ layers configuration."
   ;;(define-key l-state-map (kbd ")") 'paredit-forward)
   ;;(define-key evil-normal-state-map (kbd "(") 'paredit-backward)
 
+  (defun wc-only-words ()
+    "Prints number of lines, words and characters in region or whole buffer."
+    (interactive)
+    (let ((n 0)
+          (start (if mark-active (region-beginning) (point-min)))
+          (end (if mark-active (region-end) (point-max))))
+      (save-excursion
+        (goto-char start)
+        (while (< (point) end) (if (forward-word 1) (setq n (1+ n)))))
+      (message "%3d" n)))
+
+  (spacemacs|define-mode-line-segment date-time-segment
+    (concat (shell-command-to-string "echo -n $(date +%k:%M)")
+            " WC:" (wc-only-words)))
+
+  (add-to-list 'spacemacs-mode-line-right 'date-time-segment)
+
   (defun helm-do-grep-recursive (&optional non-recursive)
     "Like `helm-do-grep', but greps recursively by default."
-    (grep-find-ignored-directories)
-
-    (eval-after-load 'grep
-      '(progn
-         (add-to-list 'grep-find-ignored-directories ".git")
-         (add-to-list 'grep-find-ignored-directories "target")
-         (add-to-list 'grep-find-ignored-directories "node_modules")
-         (add-to-list 'grep-find-ignored-directories "gen")
-         (add-to-list 'grep-find-ignored-files "*.jar")
-         (add-to-list 'grep-find-ignored-files "angular.js")
-         (add-to-list 'grep-find-ignored-files "bootstrap.js")
-         (add-to-list 'grep-find-ignored-files "ng-grid.js")
-         (add-to-list 'grep-find-ignored-files "cal-heatmap.js")
-         (add-to-list 'grep-find-ignored-files "nrcerts")
-         (add-to-list 'grep-find-ignored-files "*.dump")
-         ))
 
     (interactive "P")
     (let* ((current-prefix-arg (not non-recursive))
            (helm-current-prefix-arg non-recursive))
       (call-interactively 'helm-do-grep)))
+
+  (eval-after-load 'grep
+    '(progn
+       (add-to-list 'grep-find-ignored-directories ".git")
+       (add-to-list 'grep-find-ignored-directories "target")
+       (add-to-list 'grep-find-ignored-directories "node_modules")
+       (add-to-list 'grep-find-ignored-directories "gen")
+       (add-to-list 'grep-find-ignored-files "*.jar")
+       (add-to-list 'grep-find-ignored-files "angular.js")
+       (add-to-list 'grep-find-ignored-files "bootstrap.js")
+       (add-to-list 'grep-find-ignored-files "ng-grid.js")
+       (add-to-list 'grep-find-ignored-files "cal-heatmap.js")
+       (add-to-list 'grep-find-ignored-files "nrcerts")
+       (add-to-list 'grep-find-ignored-files "*.dump")))
+
   (add-hook 'helm-before-initialize-hook
             (lambda ()
               ;; instead I've found that one can save a grep session with
               ;; C-x C-s, then go to files using C-up/down when in insert
               ;;(define-key helm-grep-mode-map (kbd "RET") 'helm-grep-mode-jump-other-window)
-              (define-key helm-find-files-map (kbd "C-h") 'helm-find-files-up-one-level)
-              (define-key helm-find-files-map (kbd "C-l") 'helm-execute-persistent-action)
               (define-key global-map (kbd "C-S-f") 'helm-do-grep-recursive)
               (define-key global-map (kbd "C-x C-f") 'helm-find-files)
               (define-key global-map (kbd "C-x b") 'helm-mini)
