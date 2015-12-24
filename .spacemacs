@@ -184,7 +184,7 @@ layers configuration."
       (save-excursion
         (goto-char start)
         (while (< (point) end) (if (forward-word 1) (setq n (1+ n)))))
-      (message "%3d" n)))
+      (format "%3d" n)))
 
   (spacemacs|define-mode-line-segment date-time-segment
     (concat (shell-command-to-string "echo -n $(date +%k:%M)")
