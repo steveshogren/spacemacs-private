@@ -20,12 +20,27 @@
 
 ;; List of packages to exclude.
 (setq langtool-excluded-packages '())
-
 ;; For each package, define a function langtool/init-<package-name>
 ;;
-;; (defun langtool/init-my-package ()
-;;   "Initialize my package"
-;;   )
+(defun langtool/init-langtool ()
+  "Initialize my package"
+    (use-package langtool
+        ; Use :mode to set language modes to automatically activate on certain extensions
+        ; :defer t activates lazy loading which makes startup faster
+        :defer f
+        ; The code in :init is always run, use it to set up config vars and key bindings
+        :init
+        (progn ; :init only takes one expression so use "progn" to combine multiple things
+        ; You can configure package variables here
+            (setq langtool-language-tool-jar "/home/jack/LanguageTool-3.2/languagetool.jar")
+        ; Using evil-leader/set-key-for-mode adds bindings under SPC for a certain mode
+        ; Use evil-leader/set-key to create global SPC bindings
+        ;;(evil-leader/set-key-for-mode 'ledger-mode
+            ;;"mhd"   'ledger-delete-current-transaction
+            ;;"m RET" 'ledger-set-month))
+        :config ; :config is called after the package is actually loaded with defer
+        ; You can put stuff that relies on the package like function calls here
+        (message "Langtool loaded!"))))
 ;;
 ;; Often the body of an initialize function uses `use-package'
 ;; For more info on `use-package', see readme:
