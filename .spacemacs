@@ -32,6 +32,7 @@
      paredit-evil-keys
      haskell
      ess
+     langtool
      fsharp
      racket
      react
@@ -142,7 +143,7 @@ before layers configuration."
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters the
    ;; point when it reaches the top or bottom of the screen.
-   dotspacemacs-smooth-scrolling t
+   dotspacemacs-smooth-scrolling nil
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    dotspacemacs-smartparens-strict-mode t
    ;; If non nil advises quit functions to keep server open when quitting.
@@ -161,7 +162,7 @@ before layers configuration."
   (add-to-list 'exec-path "~/.cabal/bin/")
   )
 
-(defun dotspacemacs/config ()
+(defun dotspacemacs/user-config ()
   "Configuration function.
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
@@ -191,6 +192,12 @@ layers configuration."
             " WC:" (wc-only-words)))
 
   (add-to-list 'spacemacs-mode-line-right 'date-time-segment)
+
+  ;; Sql usage
+  ;; sql-postgres (connect to postgres buffer)
+  ;; nav to sql file
+  ;; sql-set-product (postgres)
+  ;; sql-set-sqli-buffer (*SQL*)
 
   (defun helm-do-grep-recursive (&optional non-recursive)
     "Like `helm-do-grep', but greps recursively by default."

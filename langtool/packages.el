@@ -32,7 +32,16 @@
         :init
         (progn ; :init only takes one expression so use "progn" to combine multiple things
         ; You can configure package variables here
-            (setq langtool-language-tool-jar "/home/jack/LanguageTool-3.2/languagetool.jar")
+            (setq langtool-language-tool-jar "/home/jack/LanguageTool-3.2/languagetool-commandline.jar")
+            ;;(setq langtool-default-language "en-US -d EN_QUOTES[1]")
+            (setq langtool-default-language "en-US")
+            (setq langtool-disabled-rules '("EN_QUOTES"))
+            
+            ;;(setq langtool-disabled-rules "[EN_QUOTES[1]],[EN_QUOTES[2]]")
+            
+;;            (setq langtool-disabled-rules '("[EN_QUOTES[1]]" "[EN_QUOTES[2]]"))
+
+            (global-set-key "\M-n" 'langtool-goto-next-error)
         ; Using evil-leader/set-key-for-mode adds bindings under SPC for a certain mode
         ; Use evil-leader/set-key to create global SPC bindings
         ;;(evil-leader/set-key-for-mode 'ledger-mode
