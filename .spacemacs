@@ -167,9 +167,9 @@ before layers configuration."
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
 
-  (desktop-save-mode 1)
-  (golden-ratio-mode 1)
-  (desktop-read)
+  ;;(desktop-save-mode 1)
+  ;;(golden-ratio-mode 1)
+  ;;(desktop-read)
 
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
 
@@ -198,6 +198,15 @@ layers configuration."
   ;; nav to sql file
   ;; sql-set-product (postgres)
   ;; sql-set-sqli-buffer (*SQL*)
+  ;; C-cC-b send buffer to *SQL* instance
+  (defun make-postgres-buffer ()
+    (interactive)
+    (progn
+      (sql-set-product "postgres")
+      (sql-set-sqli-buffer "*SQL*")
+      )
+    )
+  (define-key global-map (kbd "<f8>") 'make-postgres-buffer)
 
   (defun helm-do-grep-recursive (&optional non-recursive)
     "Like `helm-do-grep', but greps recursively by default."
@@ -226,12 +235,11 @@ layers configuration."
               ;; instead I've found that one can save a grep session with
               ;; C-x C-s, then go to files using C-up/down when in insert
               ;;(define-key helm-grep-mode-map (kbd "RET") 'helm-grep-mode-jump-other-window)
-              (define-key global-map (kbd "C-S-f") 'helm-do-grep-recursive)
-              (define-key global-map (kbd "C-x C-f") 'helm-find-files)
+              (define-key global-map (kbd "C-x C-f") 'helm-do-grep-recursive)
+              ;(define-key global-map (kbd "C-x C-f") 'helm-find-files)
               (define-key global-map (kbd "C-x b") 'helm-mini)
               ))
 
   )
-
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
