@@ -168,7 +168,7 @@ before layers configuration."
 layers configuration."
 
   ;;(desktop-save-mode 1)
-  ;;(golden-ratio-mode 1)
+  (golden-ratio-mode 1)
   ;;(desktop-read)
 
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
@@ -199,14 +199,20 @@ layers configuration."
   ;; sql-set-product (postgres)
   ;; sql-set-sqli-buffer (*SQL*)
   ;; C-cC-b send buffer to *SQL* instance
-  (defun make-postgres-buffer ()
-    (interactive)
-    (progn
-      (sql-set-product "postgres")
-      (sql-set-sqli-buffer "*SQL*")
-      )
-    )
-  (define-key global-map (kbd "<f8>") 'make-postgres-buffer)
+  (setq sql-postgres-login-params
+      '((user :default "postgres")
+        (database :default "swipes")
+        (server :default "localhost")
+        (port :default 5432)))
+  (add-hook 'sql-interactive-mode-hook
+            (lambda ()
+              (toggle-truncate-lines t)))
+
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (flyspell-mode t)
+              (auto-fill-mode t)
+              ))
 
   (defun helm-do-grep-recursive (&optional non-recursive)
     "Like `helm-do-grep', but greps recursively by default."
