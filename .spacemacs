@@ -25,13 +25,16 @@
           git-gutter-use-fringe t)
      markdown
      org
+     sql
      syntax-checking
      clojure
+     scala
      themes-megapack
      ;; cider-settings
      paredit-evil-keys
-     haskell
+     (haskell :variables haskell-enable-hindent-style "johan-tibell")
      ess
+     restclient
      langtool
      fsharp
      racket
@@ -81,7 +84,7 @@ before layers configuration."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(sanityinc-tomorrow-bright
+   dotspacemacs-themes '(ujelly deeper-blue sanityinc-tomorrow-bright
                          solarized-dark
                          solarized-light
                          leuven
@@ -172,6 +175,7 @@ layers configuration."
   ;;(desktop-read)
 
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
+  (define-key global-map (kbd "C-q") 'cider-find-var)
 
   ;;(define-key l-state-map (kbd ")") 'paredit-forward)
   ;;(define-key evil-normal-state-map (kbd "(") 'paredit-backward)
@@ -187,11 +191,11 @@ layers configuration."
         (while (< (point) end) (if (forward-word 1) (setq n (1+ n)))))
       (format "%3d" n)))
 
-  (spacemacs|define-mode-line-segment date-time-segment
-    (concat (shell-command-to-string "echo -n $(date +%k:%M)")
-            " WC:" (wc-only-words)))
+ ;; (spacemacs|define-mode-line-segment date-time-segment
+ ;;   (concat (shell-command-to-string "echo -n $(date +%k:%M)")
+ ;;           " WC:" (wc-only-words)))
 
-  (add-to-list 'spacemacs-mode-line-right 'date-time-segment)
+  ;;(add-to-list 'spacemacs-mode-line-right 'date-time-segment)
 
   ;; Sql usage
   ;; sql-postgres (connect to postgres buffer)
@@ -199,6 +203,9 @@ layers configuration."
   ;; sql-set-product (postgres)
   ;; sql-set-sqli-buffer (*SQL*)
   ;; C-cC-b send buffer to *SQL* instance
+
+  ;; SPC-k to start spartparens movement
+  ;; SPC-k s/b slurp barf
   (setq sql-postgres-login-params
       '((user :default "postgres")
         (database :default "swipes")
@@ -213,6 +220,11 @@ layers configuration."
               (flyspell-mode t)
               (auto-fill-mode t)
               ))
+
+  (define-key global-map (kbd "C-)") 'sp-forward-slurp-sexp)
+  (define-key global-map (kbd "C-}") 'sp-forward-barf-sexp)
+  (define-key global-map (kbd "C-(") 'sp-backward-slurp-sexp)
+  (define-key global-map (kbd "C-{") 'sp-backward-barf-sexp)
 
   (defun helm-do-grep-recursive (&optional non-recursive)
     "Like `helm-do-grep', but greps recursively by default."
@@ -235,6 +247,19 @@ layers configuration."
        (add-to-list 'grep-find-ignored-files "cal-heatmap.js")
        (add-to-list 'grep-find-ignored-files "nrcerts")
        (add-to-list 'grep-find-ignored-files "*.dump")))
+
+  ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+  (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+
+  ;; Replacing text in several files
+  ;; Replacing an occurrence of text in several files can be performed via helm-ag.
+  ;; Say you want to replace all foo occurrences by bar in your current project:
+  ;; initiate a search with SPC /
+  ;; enter in edit mode with C-c C-e
+  ;; go to the occurrence and enter in iedit state with SPC s e
+  ;; edit the occurrences then leave the iedit state
+  ;; press C-c C-c
+
 
   (add-hook 'helm-before-initialize-hook
             (lambda ()
