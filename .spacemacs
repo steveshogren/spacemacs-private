@@ -30,6 +30,7 @@
      clojure
      scala
      themes-megapack
+     go
      ;; cider-settings
      paredit-evil-keys
      (haskell :variables haskell-enable-hindent-style "johan-tibell")
@@ -259,6 +260,20 @@ layers configuration."
   ;; go to the occurrence and enter in iedit state with SPC s e
   ;; edit the occurrences then leave the iedit state
   ;; press C-c C-c
+  (defun xah-syntax-color-hex ()
+    "Syntax color text of the form 「#ff1100」 in current buffer.
+URL `http://ergoemacs.org/emacs/emacs_CSS_colors.html'
+Version 2015-06-11"
+    (interactive)
+    (font-lock-add-keywords
+     nil
+     '(("#[abcdef[:digit:]]\\{6\\}"
+        (0 (put-text-property
+            (match-beginning 0)
+            (match-end 0)
+            'face (list :background (match-string-no-properties 0)))))))
+    (font-lock-fontify-buffer))
+  (add-hook 'css-mode-hook 'xah-syntax-color-hex)
 
 
   (add-hook 'helm-before-initialize-hook
