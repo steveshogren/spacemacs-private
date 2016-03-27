@@ -33,7 +33,9 @@
      go
      ;; cider-settings
      paredit-evil-keys
-     (haskell :variables haskell-enable-hindent-style "johan-tibell")
+     (haskell :variables
+              haskell-enable-hindent-style "johan-tibell"
+              haskell-process-type 'stack-ghci)
      ess
      restclient
      langtool
@@ -85,12 +87,16 @@ before layers configuration."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(ujelly deeper-blue sanityinc-tomorrow-bright
-                         solarized-dark
-                         solarized-light
-                         leuven
-                         monokai
-                         zenburn)
+   dotspacemacs-themes '(
+
+                         sanityinc-tomorrow-eighties
+                         ujelly
+                         deeper-blue
+                         sanityinc-tomorrow-bright
+                         sanityinc-tomorrow-night
+                         spacemacs-dark
+                         professional
+                         )
    ;; If non nil the cursor color matches the state color.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -126,7 +132,7 @@ before layers configuration."
    dotspacemacs-loading-progress-bar t
    ;; If non nil the frame is fullscreen when Emacs starts up.
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup 't
+   dotspacemacs-fullscreen-at-startup nil
    ;; If non nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX."
    dotspacemacs-fullscreen-use-non-native nil
@@ -216,6 +222,11 @@ layers configuration."
             (lambda ()
               (toggle-truncate-lines t)))
 
+  (add-hook 'markdown-mode-hook
+            (lambda ()
+              (flyspell-mode t)
+              (auto-fill-mode t)
+              ))
   (add-hook 'org-mode-hook
             (lambda ()
               (flyspell-mode t)
@@ -237,6 +248,7 @@ layers configuration."
 
   (eval-after-load 'grep
     '(progn
+       (setq helm-ag-use-grep-ignore-list 't)
        (add-to-list 'grep-find-ignored-directories ".git")
        (add-to-list 'grep-find-ignored-directories "target")
        (add-to-list 'grep-find-ignored-directories "node_modules")
@@ -251,6 +263,7 @@ layers configuration."
 
   ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
   (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+  (spacemacs/toggle-visual-line-navigation-on)
 
   ;; Replacing text in several files
   ;; Replacing an occurrence of text in several files can be performed via helm-ag.
