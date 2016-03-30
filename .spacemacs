@@ -265,6 +265,10 @@ layers configuration."
   (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
   (spacemacs/toggle-visual-line-navigation-on)
 
+
+  ;; To replace the ubuntu terminal tab in bashrc:
+  ;; PROMPT_COMMAND='__git_ps1 "$PROMPT_BEFORE" "$PROMPT_AFTER" && echo -ne "\033]0;${PWD//$HOME\/programming/p}\007"'
+
   ;; Replacing text in several files
   ;; Replacing an occurrence of text in several files can be performed via helm-ag.
   ;; Say you want to replace all foo occurrences by bar in your current project:
