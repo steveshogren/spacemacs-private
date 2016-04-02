@@ -184,6 +184,8 @@ layers configuration."
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
   (define-key global-map (kbd "C-q") 'cider-find-var)
 
+  (setq cider-prompt-for-project-on-connect nil)
+
   ;;(define-key l-state-map (kbd ")") 'paredit-forward)
   ;;(define-key evil-normal-state-map (kbd "(") 'paredit-backward)
 
