@@ -40,6 +40,7 @@
      restclient
      langtool
      fsharp
+     csharp
      racket
      react
      (colors ;;:variables
@@ -235,6 +236,9 @@ layers configuration."
               (auto-fill-mode t)
               ))
 
+  (global-linum-mode)
+  ;; (with-eval-after-load 'linum (linum-relative-toggle))
+
   (define-key global-map (kbd "C-)") 'sp-forward-slurp-sexp)
   (define-key global-map (kbd "C-}") 'sp-forward-barf-sexp)
   (define-key global-map (kbd "C-(") 'sp-backward-slurp-sexp)
@@ -266,7 +270,39 @@ layers configuration."
   ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
   (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
   (spacemacs/toggle-visual-line-navigation-on)
+  ;; Disabled the repeat keys to better learn the alteratives
+  ;; C-y - scroll up one line
+  ;; C-e - scroll down one line
+  ;; C-u - scroll up
+  ;; C-d - scroll down
+  ;; zz  - center screen
+  ;; zt  - center cursor top
+  ;; zb  - center cursor bottom
+  ;;
+  ;; Regions
+  ;; .  - current ine
+  ;; .+5 - current line +5
+  ;; E.g
+  ;; :.,.+5s/center/align/g -- regex from current line down 5
+  ;; ma - mark a
+  ;; mb - mark b
+  ;; :'a,'bs/center/align/g -- regex from a line to b line
+  ;;  (shell-command "cp /home/jack/.spacemacs /home/jack/private/.spacemacs")
 
+  ;; :274,280d   - delete from 274 to 280
+  ;; :21,25t 30	copy lines 21 to 25 inclusive to just after line 30
+  ;; :21,25m 30	move lines 21 to 25 inclusive to just after line 30
+
+  ;; SPC-f-f      - open/new file/make directory
+  ;;      - in file finder
+  ;;      C-hjkl movement, type to fuzzy search in directory
+  ;; SPC-b-b      - open buffer list
+  ;; C-g | ESC    - close popup
+  ;; SPC-p-f      - fuzzy find file in project
+  ;; SPC-/          - search project
+  ;; SPC c l      - comment line
+  ;; ----- Plugins -----------------------------
+  ;; SPC-g-s      - git status
 
   ;; To replace the ubuntu terminal tab in bashrc:
   ;; PROMPT_COMMAND='__git_ps1 "$PROMPT_BEFORE" "$PROMPT_AFTER" && echo -ne "\033]0;${PWD//$HOME\/programming/p}\007"'
@@ -293,7 +329,13 @@ Version 2015-06-11"
             'face (list :background (match-string-no-properties 0)))))))
     (font-lock-fontify-buffer))
   (add-hook 'css-mode-hook 'xah-syntax-color-hex)
+  (setq js-indent-level 2)
+  (setq web-indent-level 2)
 
+  (add-hook 'html-mode-hook
+            (lambda ()
+              ;; Default indentation is usually 2 spaces, changing to 4.
+              (set (make-local-variable 'sgml-basic-offset) 2)))
 
   (add-hook 'helm-before-initialize-hook
             (lambda ()
