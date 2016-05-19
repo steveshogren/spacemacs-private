@@ -228,13 +228,13 @@ layers configuration."
   (add-hook 'markdown-mode-hook
             (lambda ()
               (flyspell-mode t)
-              (auto-fill-mode t)
-              ))
+              (when (y-or-n-p "Auto Fill mode? ")
+                (turn-on-auto-fill))))
   (add-hook 'org-mode-hook
             (lambda ()
               (flyspell-mode t)
-              (auto-fill-mode t)
-              ))
+              (when (y-or-n-p "Auto Fill mode? ")
+                (turn-on-auto-fill))))
 
   (global-linum-mode)
   ;; (with-eval-after-load 'linum (linum-relative-toggle))
@@ -243,6 +243,9 @@ layers configuration."
   (define-key global-map (kbd "C-}") 'sp-forward-barf-sexp)
   (define-key global-map (kbd "C-(") 'sp-backward-slurp-sexp)
   (define-key global-map (kbd "C-{") 'sp-backward-barf-sexp)
+
+  (defun dot-spacemacs-private-copy ()
+    (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs"))
 
   (defun helm-do-grep-recursive (&optional non-recursive)
     "Like `helm-do-grep', but greps recursively by default."
@@ -288,6 +291,7 @@ layers configuration."
   ;; mb - mark b
   ;; :'a,'bs/center/align/g -- regex from a line to b line
   ;;  (shell-command "cp /home/jack/.spacemacs /home/jack/private/.spacemacs")
+  ;;  (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs") 
 
   ;; :274,280d   - delete from 274 to 280
   ;; :21,25t 30	copy lines 21 to 25 inclusive to just after line 30
