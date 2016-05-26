@@ -244,6 +244,11 @@ layers configuration."
   (define-key global-map (kbd "C-(") 'sp-backward-slurp-sexp)
   (define-key global-map (kbd "C-{") 'sp-backward-barf-sexp)
 
+  (defun save-all ()
+    (interactive)
+    (save-some-buffers t))
+  (add-hook 'focus-out-hook 'save-all)
+
   (defun dot-spacemacs-private-copy ()
     (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs"))
 
@@ -296,6 +301,8 @@ layers configuration."
   ;; :274,280d   - delete from 274 to 280
   ;; :21,25t 30	copy lines 21 to 25 inclusive to just after line 30
   ;; :21,25m 30	move lines 21 to 25 inclusive to just after line 30
+
+  ;; :21,25g!/public/d  - delete lines missing public (g! inverts)
 
   ;; SPC-f-f      - open/new file/make directory
   ;;      - in file finder
