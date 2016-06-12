@@ -228,13 +228,11 @@ layers configuration."
   (add-hook 'markdown-mode-hook
             (lambda ()
               (flyspell-mode t)
-              (when (y-or-n-p "Auto Fill mode? ")
-                (turn-on-auto-fill))))
+              (turn-on-auto-fill)))
   (add-hook 'org-mode-hook
             (lambda ()
               (flyspell-mode t)
-              (when (y-or-n-p "Auto Fill mode? ")
-                (turn-on-auto-fill))))
+              (turn-on-auto-fill)))
 
   (global-linum-mode)
   ;; (with-eval-after-load 'linum (linum-relative-toggle))
@@ -248,6 +246,20 @@ layers configuration."
     (interactive)
     (save-some-buffers t))
   (add-hook 'focus-out-hook 'save-all)
+
+  (defun build-book ()
+    (interactive)
+    (progn
+      (org-md-export-to-markdown)
+      (let ((dir default-directory)
+            (overwrite 't))
+        (mapc (function (lambda (file)
+                          (copy-file (concat dir file ".md")
+                                     (concat dir "../manuscript/" file ".txt")
+                                     overwrite)))
+              '("chapter1")))))
+
+  (define-key global-map (kbd "<f8>") 'build-book)
 
   (defun dot-spacemacs-private-copy ()
     (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs"))
