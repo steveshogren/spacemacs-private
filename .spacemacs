@@ -21,6 +21,7 @@
      (auto-completion :variables
                       auto-completion-enable-company-help-tooltip t)
      better-defaults
+     latex
      (git :variables
           git-gutter-use-fringe t)
      markdown
@@ -28,6 +29,7 @@
      sql
      syntax-checking
      clojure
+     persp
      scala
      themes-megapack
      go
@@ -178,9 +180,10 @@ before layers configuration."
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
 
-  ;;(desktop-save-mode 1)
+  (desktop-save-mode)
+  (desktop-read)
+
   (golden-ratio-mode 1)
-  ;;(desktop-read)
 
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
   (define-key global-map (kbd "C-q") 'cider-find-var)
@@ -262,7 +265,9 @@ layers configuration."
   (define-key global-map (kbd "<f8>") 'build-book)
 
   (defun dot-spacemacs-private-copy ()
-    (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs"))
+    (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs")
+    ;;(shell-command "cp /home/jack/.spacemacs /home/jack/private/.spacemacs ")
+    )
 
   (defun helm-do-grep-recursive (&optional non-recursive)
     "Like `helm-do-grep', but greps recursively by default."
@@ -354,6 +359,9 @@ Version 2015-06-11"
   (add-hook 'css-mode-hook 'xah-syntax-color-hex)
   (setq js-indent-level 2)
   (setq web-indent-level 2)
+  (setq-default tab-width 2)
+  (setq sgml-basic-offset 2)
+  (setq web-mode-markup-indent-offset 2)
 
   (add-hook 'html-mode-hook
             (lambda ()
