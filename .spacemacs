@@ -321,6 +321,11 @@ layers configuration."
 
   ;; :21,25g!/public/d  - delete lines missing public (g! inverts)
 
+  ;; DEBUGGING
+  ;; Elisp debugging: use `debug-on-entry' to force emacs to break whenever
+  ;; the fuction is called. `c' will continue.
+  ;; Use `cancel-debug-on-entry' to stop that
+
   ;; SPC-f-f      - open/new file/make directory
   ;;      - in file finder
   ;;      C-hjkl movement, type to fuzzy search in directory
