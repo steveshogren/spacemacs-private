@@ -269,6 +269,17 @@ layers configuration."
     ;;(shell-command "cp /home/jack/.spacemacs /home/jack/private/.spacemacs ")
     )
 
+  ;; to print out to the current buffer, use SPC-u M-! command
+  ;; to simply execute, use M-! command
+  (defun get-git-history ()
+    (interactive)
+    (insert (shell-command-to-string "dateParser -c")))
+  (defun show-git-history ()
+    (interactive)
+    (shell-command "dateParser -c"))
+
+  (define-key global-map (kbd "C-c C-d") 'show-git-history)
+
   (defun helm-do-grep-recursive (&optional non-recursive)
     "Like `helm-do-grep', but greps recursively by default."
 
