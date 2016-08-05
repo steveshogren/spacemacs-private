@@ -254,15 +254,21 @@ layers configuration."
     (interactive)
     (progn
       (org-md-export-to-markdown)
-      (let ((dir default-directory)
-            (overwrite 't))
+      (let (dir default-directory)
+           (overwrite 't))
         (mapc (function (lambda (file)
                           (copy-file (concat dir file ".md")
                                      (concat dir "../manuscript/" file ".txt")
                                      overwrite)))
               '("chapter1")))))
 
-  (define-key global-map (kbd "<f8>") 'build-book)
+
+  (defun build-vim-book ()
+    (interactive)
+   ;; (magit-shell-command-topdir "zip -r exercises.zip files"))
+    (call-interactively 'magit-shell-command-topdir "zip -r exercises.zip files"))
+
+  (define-key global-map (kbd "<f8>") 'build-vim-book)
 
   (defun dot-spacemacs-private-copy ()
     (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs")
