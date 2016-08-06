@@ -262,13 +262,19 @@ layers configuration."
                                      overwrite)))
               '("chapter1")))))
 
-
   (defun build-vim-book ()
     (interactive)
    ;; (magit-shell-command-topdir "zip -r exercises.zip files"))
-    (call-interactively 'magit-shell-command-topdir "zip -r exercises.zip files"))
+    (shell-command "cd /home/jack/programming/vimtutor && zip -r exercises.zip files"))
 
   (define-key global-map (kbd "<f8>") 'build-vim-book)
+
+(defun wc-vim-book ()
+  (interactive)
+  ;; (magit-shell-command-topdir "zip -r exercises.zip files"))
+  (shell-command "cd /home/jack/programming/vimtutor && wc -w manuscript/*"))
+
+(define-key global-map (kbd "<f9>") 'wc-vim-book)
 
   (defun dot-spacemacs-private-copy ()
     (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs")
