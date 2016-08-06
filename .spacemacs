@@ -92,10 +92,10 @@ before layers configuration."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
 
-                         sanityinc-tomorrow-eighties
                          ujelly
-                         deeper-blue
                          sanityinc-tomorrow-bright
+                         sanityinc-tomorrow-eighties
+                         deeper-blue
                          sanityinc-tomorrow-night
                          spacemacs-dark
                          professional
@@ -105,7 +105,7 @@ before layers configuration."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 10
+                               :size 15
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -260,7 +260,7 @@ layers configuration."
                           (copy-file (concat dir file ".md")
                                      (concat dir "../manuscript/" file ".txt")
                                      overwrite)))
-              '("chapter1")))))
+              '("chapter1"))))
 
   (defun build-vim-book ()
     (interactive)
