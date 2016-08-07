@@ -105,7 +105,7 @@ before layers configuration."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 15
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -227,6 +227,11 @@ layers configuration."
   (add-hook 'sql-interactive-mode-hook
             (lambda ()
               (toggle-truncate-lines t)))
+
+  (add-hook 'text-mode-hook
+            (lambda ()
+              (flyspell-mode t)
+              (turn-on-auto-fill)))
 
   (add-hook 'markdown-mode-hook
             (lambda ()
