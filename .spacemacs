@@ -267,9 +267,14 @@ layers configuration."
                                      overwrite)))
               '("chapter1"))))
 
+  (defun print-git-hist ()
+    (interactive)
+    (shell-command "dateParser -c"))
+
+  (define-key global-map (kbd "<f7>") 'print-git-hist)
+
   (defun build-vim-book ()
     (interactive)
-   ;; (magit-shell-command-topdir "zip -r exercises.zip files"))
     (shell-command "cd /home/jack/programming/vimtutor && zip -r exercises.zip files"))
 
   (define-key global-map (kbd "<f8>") 'build-vim-book)
