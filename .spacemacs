@@ -182,6 +182,7 @@ layers configuration."
 
   (desktop-save-mode)
   (desktop-read)
+  ;;(desktop-path  )
 
   (golden-ratio-mode 1)
 
@@ -282,14 +283,14 @@ layers configuration."
 (defun wc-vim-book ()
   (interactive)
   ;; (magit-shell-command-topdir "zip -r exercises.zip files"))
-  (shell-command "cd /home/jack/programming/vimtutor && wc -w manuscript/*"))
+  (shell-command "cd /home/jack/programming/vimtutor && wc -w manuscript/*.txt"))
 
 (define-key global-map (kbd "<f9>") 'wc-vim-book)
 
-  (defun dot-spacemacs-private-copy ()
-    (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs")
-    ;;(shell-command "cp /home/jack/.spacemacs /home/jack/private/.spacemacs ")
-    )
+(defun dot-spacemacs-private-copy ()
+  (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs")
+  ;;(shell-command "cp /home/jack/.spacemacs /home/jack/private/.spacemacs ")
+  )
 
   ;; to print out to the current buffer, use SPC-u M-! command
   ;; to simply execute, use M-! command
