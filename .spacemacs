@@ -287,6 +287,12 @@ layers configuration."
 
 (define-key global-map (kbd "<f9>") 'wc-vim-book)
 
+(defun vim-book-build ()
+  (interactive)
+  (shell-command "cd /home/jack/programming/vimtutor/manuscript && pandoc -f org -t markdown -o exercises-gen.txt exercises.org"))
+
+(define-key global-map (kbd "<f10>") 'vim-book-build)
+
 (defun dot-spacemacs-private-copy ()
   (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs")
   ;;(shell-command "cp /home/jack/.spacemacs /home/jack/private/.spacemacs ")
