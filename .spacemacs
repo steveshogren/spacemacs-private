@@ -283,15 +283,10 @@ layers configuration."
 (defun wc-vim-book ()
   (interactive)
   ;; (magit-shell-command-topdir "zip -r exercises.zip files"))
+  (shell-command "cd /home/jack/programming/vimtutor/manuscript && pandoc -f org -t markdown -o exercises-gen.txt exercises.org")
   (shell-command "cd /home/jack/programming/vimtutor && wc -w manuscript/*.txt"))
 
 (define-key global-map (kbd "<f9>") 'wc-vim-book)
-
-(defun vim-book-build ()
-  (interactive)
-  (shell-command "cd /home/jack/programming/vimtutor/manuscript && pandoc -f org -t markdown -o exercises-gen.txt exercises.org"))
-
-(define-key global-map (kbd "<f10>") 'vim-book-build)
 
 (defun dot-spacemacs-private-copy ()
   (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs")
