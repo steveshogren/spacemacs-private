@@ -41,8 +41,8 @@
      ess
      restclient
      langtool
-     fsharp
-     csharp
+     ;;fsharp
+     ;;csharp
      racket
      react
      (colors ;;:variables
@@ -181,13 +181,12 @@ before layers configuration."
 layers configuration."
 
   (desktop-save-mode)
-  (desktop-read)
   ;;(desktop-path  )
 
   (golden-ratio-mode 1)
 
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
-  (define-key global-map (kbd "C-q") 'cider-find-var)
+  (define-key global-map (kbd "C-a") 'cider-find-var)
 
   (setq cider-prompt-for-project-on-connect nil)
 
@@ -418,6 +417,7 @@ Version 2015-06-11"
               (define-key global-map (kbd "C-x b") 'helm-mini)
               ))
 
+   (desktop-read)
   )
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
