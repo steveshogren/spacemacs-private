@@ -186,7 +186,8 @@ layers configuration."
   (golden-ratio-mode 1)
 
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
-  (define-key global-map (kbd "C-a") 'cider-find-var)
+  (define-key cider-mode-map (kbd "C-a") 'cider-find-var)
+  (define-key haskell-mode-map (kbd "C-a") 'haskell-mode-jump-to-def-or-tag)
 
   (setq cider-prompt-for-project-on-connect nil)
 
