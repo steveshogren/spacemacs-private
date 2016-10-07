@@ -185,9 +185,13 @@ layers configuration."
 
   (golden-ratio-mode 1)
 
+  (add-to-list 'load-path "~/private/ox-leanpub")
+  (require 'ox-leanpub)
+
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
   (define-key cider-mode-map (kbd "C-a") 'cider-find-var)
   (define-key haskell-mode-map (kbd "C-a") 'haskell-mode-jump-to-def-or-tag)
+;;  (define-key global-map (kbd "C-S-t") 'helm-find-files)
 
   (setq cider-prompt-for-project-on-connect nil)
 
@@ -283,7 +287,11 @@ layers configuration."
 (defun wc-vim-book ()
   (interactive)
   ;; (magit-shell-command-topdir "zip -r exercises.zip files"))
-  (shell-command "cd /home/jack/programming/vimtutor/manuscript && pandoc -f org -t markdown -o exercises-gen.txt exercises.org")
+  (let ((cmd (concat "cd /home/jack/programming/vimtutor/manuscript "
+                     " && pandoc -f org -t markdown_github -o exercises-gen.txt exercises.org"
+                     " && sed -i 's/|\\s\\+|\\s\\+|//g' exercises-gen.txt" 
+                     " && sed -i 's/|-\\+|-\\+|//g' exercises-gen.txt")))
+    (shell-command cmd))
   (shell-command "cd /home/jack/programming/vimtutor && wc -w manuscript/*.txt"))
 
 (define-key global-map (kbd "<f9>") 'wc-vim-book)
