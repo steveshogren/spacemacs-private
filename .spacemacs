@@ -189,7 +189,8 @@ layers configuration."
   (require 'ox-leanpub)
 
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
-  (define-key cider-mode-map (kbd "C-a") 'cider-find-var)
+  (define-key clojure-mode-map (kbd "C-a") 'cider-find-var)
+
   (define-key haskell-mode-map (kbd "C-a") 'haskell-mode-jump-to-def-or-tag)
 ;;  (define-key global-map (kbd "C-S-t") 'helm-find-files)
 
@@ -284,26 +285,26 @@ layers configuration."
 
   (define-key global-map (kbd "<f8>") 'build-vim-book)
 
-(defun wc-vim-book ()
-  (interactive)
-  ;; (magit-shell-command-topdir "zip -r exercises.zip files"))
-  (let ((cmd (concat "cd /home/jack/programming/vimtutor/manuscript "
-                     " && pandoc -f org -t markdown_github -o exercises-gen.txt exercises.org"
-                     " && sed -i 's/|\\s\\+|\\s\\+|//g' exercises-gen.txt" 
-                     " && sed -i 's/|-\\+|-\\+|//g' exercises-gen.txt")))
-    (shell-command cmd))
-  (shell-command "cd /home/jack/programming/vimtutor && wc -w manuscript/*.txt"))
+  (defun wc-vim-book ()
+    (interactive)
+    (build-vim-book)
+    (let ((cmd (concat "cd /home/jack/programming/vimtutor/manuscript "
+                       " && pandoc -f org -t markdown_github -o exercises-gen.txt exercises.org"
+                       " && sed -i 's/|\\s\\+|\\s\\+|//g' exercises-gen.txt" 
+                       " && sed -i 's/|-\\+|-\\+|//g' exercises-gen.txt")))
+      (shell-command cmd))
+    (shell-command "cd /home/jack/programming/vimtutor && wc -w manuscript/*.txt"))
 
-(define-key global-map (kbd "<f9>") 'wc-vim-book)
+  (define-key global-map (kbd "<f9>") 'wc-vim-book)
 
-(defun dot-spacemacs-private-copy ()
-  (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs")
-  ;;(shell-command "cp /home/jack/.spacemacs /home/jack/private/.spacemacs ")
-  )
+  (defun dot-spacemacs-private-copy ()
+    (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs")
+    ;;(shell-command "cp /home/jack/.spacemacs /home/jack/private/.spacemacs ")
+    )
 
   ;; to print out to the current buffer, use SPC-u M-! command
   ;; to simply execute, use M-! command
-  (defun get-git-history ()
+ (defun get-git-history ()
     (interactive)
     (insert (shell-command-to-string "dateParser -c")))
   (defun show-git-history ()
@@ -337,7 +338,6 @@ layers configuration."
 
   ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
   (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
-  (spacemacs/toggle-visual-line-navigation-on)
   ;; Disabled the repeat keys to better learn the alteratives
   ;; C-y - scroll up one line
   ;; C-e - scroll down one line
