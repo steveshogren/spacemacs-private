@@ -189,9 +189,9 @@ layers configuration."
   (require 'ox-leanpub)
 
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
-  (define-key clojure-mode-map (kbd "C-a") 'cider-find-var)
+  ;;(define-key clojure-mode-map (kbd "C-a") 'cider-find-var)
 
-  (define-key haskell-mode-map (kbd "C-a") 'haskell-mode-jump-to-def-or-tag)
+;;  (define-key haskell-mode-map (kbd "C-a") 'haskell-mode-jump-to-def-or-tag)
 ;;  (define-key global-map (kbd "C-S-t") 'helm-find-files)
 
   (setq cider-prompt-for-project-on-connect nil)
