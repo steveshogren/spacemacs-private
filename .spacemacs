@@ -290,8 +290,8 @@ layers configuration."
     (build-vim-book)
     (let ((cmd (concat "cd /home/jack/programming/vimtutor/manuscript "
                        " && pandoc -f org -t markdown_github -o exercises-gen.txt exercises.org"
-                       " && sed -i 's/|\\s\\+|\\s\\+|//g' exercises-gen.txt" 
-                       " && sed -i 's/|-\\+|-\\+|//g' exercises-gen.txt")))
+                       " && sed -i 's/|\\s\\+\\(|\\s\\+\\)\\+|//g' exercises-gen.txt" 
+                       " && sed -i 's/|-\\+\\(|-\\+\\)\\+|//g' exercises-gen.txt")))
       (shell-command cmd))
     (shell-command "cd /home/jack/programming/vimtutor && wc -w manuscript/*.txt"))
 
