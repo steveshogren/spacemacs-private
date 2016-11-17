@@ -91,13 +91,17 @@ before layers configuration."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-
-                         ujelly
-                         sanityinc-tomorrow-bright
-                         sanityinc-tomorrow-eighties
-                         deeper-blue
-                         sanityinc-tomorrow-night
-                         spacemacs-dark
+                         cherry-blossom  ;; 5 contrast - pinkish
+                         darkburn ;; 3.5 contrast, faded colors
+                         gotham ;; 4 contrast kinda blueish
+                         ;;darktooth -- 2 contrast -
+                         badwolf ;; 4 contrast kinda reddish
+                         ujelly ;; 5 contrast -- yellowish and brown
+                         sanityinc-tomorrow-bright ;; 4 contrast - red and yellow
+                         ;; sanityinc-tomorrow-eighties ;; 2 contrast - red and yellow
+                         deeper-blue ;; 4 contrast - blue and yellow
+                         ;; sanityinc-tomorrow-night ;; 3 contrast - reds and yellows
+                         ;;spacemacs-dark ;; 1 contrast - blue and purple
                          professional
                          )
    ;; If non nil the cursor color matches the state color.
@@ -170,6 +174,8 @@ before layers configuration."
    dotspacemacs-default-package-repository nil
    )
   ;; User initialization goes here
+
+  ;;(setq-default evil-escape-key-sequence "kj")
   (autoload 'haskell-indentation-enable-show-indentations "haskell-indentation")
   (autoload 'haskell-indentation-disable-show-indentations "haskell-indentation")
   (add-to-list 'exec-path "~/.cabal/bin/")
@@ -179,6 +185,7 @@ before layers configuration."
   "Configuration function.
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
+  (global-hl-line-mode -1)
 
   (desktop-save-mode)
   ;;(desktop-path  )
@@ -293,7 +300,7 @@ layers configuration."
                        "&& perl -0777 -i.original -pe 's/\\|(\\s+\\|)+\\n\\|(-+\\|)+//igs' exercises-gen.txt"
                        )))
       (shell-command cmd))
-    (shell-command "cd /home/jack/programming/vimtutor && wc -w manuscript/*.txt"))
+    (shell-command "cd /home/jack/programming/vimtutor && wc -w manuscript/*.txt | grep total"))
 
   (define-key global-map (kbd "<f9>") 'wc-vim-book)
 
