@@ -268,7 +268,7 @@ layers configuration."
     (save-some-buffers t))
   (add-hook 'focus-out-hook 'save-all)
 
-  (defun build-book ()
+  (defun build-cooworkers-book ()
     (interactive)
     (progn
       (org-md-export-to-markdown)
@@ -292,14 +292,20 @@ layers configuration."
 
   (define-key global-map (kbd "<f8>") 'build-vim-book)
 
-  (setq org-agenda-files (list "~/programming/vimtutor/manuscript/exercises.org"))
+  (setq org-agenda-files (list "~/programming/vimtutor/manuscript/"))
 
   (defun wc-vim-book ()
     (interactive)
     (build-vim-book)
     (let ((cmd (concat "cd /home/jack/programming/vimtutor/manuscript "
-                       " && pandoc -f org -t markdown_github -o exercises-gen.txt exercises.org"
-                       "&& perl -0777 -i.original -pe 's/\\|(\\s+\\|)+\\n\\|(-+\\|)+//igs' exercises-gen.txt"
+                       " && pandoc -f org -t markdown_github -o exercises-complex-gen.txt exercises-complex.org"
+                       " && pandoc -f org -t markdown_github -o exercises-basic-gen.txt exercises-basic.org"
+                       " && pandoc -f org -t markdown_github -o exercises-navigation-gen.txt exercises-navigation.org"
+                       " && pandoc -f org -t markdown_github -o exercises-regex-gen.txt exercises-regex.org"
+                       "&& perl -0777 -i.original -pe 's/\\|(\\s+\\|)+\\n\\|(-+\\|)+//igs' exercises-complex-gen.txt"
+                       "&& perl -0777 -i.original -pe 's/\\|(\\s+\\|)+\\n\\|(-+\\|)+//igs' exercises-basic-gen.txt"
+                       "&& perl -0777 -i.original -pe 's/\\|(\\s+\\|)+\\n\\|(-+\\|)+//igs' exercises-navigation-gen.txt"
+                       "&& perl -0777 -i.original -pe 's/\\|(\\s+\\|)+\\n\\|(-+\\|)+//igs' exercises-regex-gen.txt"
                        )))
       (shell-command cmd))
     (shell-command "cd /home/jack/programming/vimtutor && wc -w manuscript/*.txt | grep total"))
