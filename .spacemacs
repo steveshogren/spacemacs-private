@@ -292,6 +292,8 @@ layers configuration."
 
   (define-key global-map (kbd "<f8>") 'build-vim-book)
 
+  (setq org-agenda-files (list "~/programming/vimtutor/manuscript/exercises.org"))
+
   (defun wc-vim-book ()
     (interactive)
     (build-vim-book)
