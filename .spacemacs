@@ -22,6 +22,7 @@
                       auto-completion-enable-company-help-tooltip t)
      better-defaults
      latex
+     emacs-lisp
      (git :variables
           git-gutter-use-fringe t)
      markdown
@@ -286,6 +287,9 @@ layers configuration."
 
   (define-key global-map (kbd "<f7>") 'print-git-hist)
 
+  (setcar (nthcdr 2 org-emphasis-regexp-components) ",\"'")
+  (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
+
   (defun build-vim-book ()
     (interactive)
     (shell-command "cd /home/jack/programming/vimtutor && zip -r exercises.zip files"))
@@ -294,19 +298,25 @@ layers configuration."
 
   (setq org-agenda-files (list "~/programming/vimtutor/manuscript/"))
 
+  (defun get-vim-pandoc-and-regex-command ()
+    (let* ((files '("exercises-complex" "exercises-basic" "exercises-navigation" "exercises-regex"))
+          (pandoc (mapconcat
+                   (function (lambda (name)
+                               (concat " && pandoc -f org -t markdown_github -o " name "-gen.txt " name ".org")))
+                   files
+                   ""))
+          (regex (mapconcat
+                  (function (lambda (name)
+                              (concat " && perl -0777 -i.original -pe 's/\\|(\\s+\\|)+\\n\\|(-+\\|)+//igs' " name "-gen.txt" )))
+                  files
+                  "")))
+      (concat pandoc regex)))
+
   (defun wc-vim-book ()
     (interactive)
     (build-vim-book)
     (let ((cmd (concat "cd /home/jack/programming/vimtutor/manuscript "
-                       " && pandoc -f org -t markdown_github -o exercises-complex-gen.txt exercises-complex.org"
-                       " && pandoc -f org -t markdown_github -o exercises-basic-gen.txt exercises-basic.org"
-                       " && pandoc -f org -t markdown_github -o exercises-navigation-gen.txt exercises-navigation.org"
-                       " && pandoc -f org -t markdown_github -o exercises-regex-gen.txt exercises-regex.org"
-                       "&& perl -0777 -i.original -pe 's/\\|(\\s+\\|)+\\n\\|(-+\\|)+//igs' exercises-complex-gen.txt"
-                       "&& perl -0777 -i.original -pe 's/\\|(\\s+\\|)+\\n\\|(-+\\|)+//igs' exercises-basic-gen.txt"
-                       "&& perl -0777 -i.original -pe 's/\\|(\\s+\\|)+\\n\\|(-+\\|)+//igs' exercises-navigation-gen.txt"
-                       "&& perl -0777 -i.original -pe 's/\\|(\\s+\\|)+\\n\\|(-+\\|)+//igs' exercises-regex-gen.txt"
-                       )))
+                       (get-vim-pandoc-and-regex-command))))
       (shell-command cmd))
     (shell-command "cd /home/jack/programming/vimtutor && wc -w manuscript/*.txt | grep total"))
 
