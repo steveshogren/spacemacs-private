@@ -23,6 +23,7 @@
      better-defaults
      latex
      emacs-lisp
+     coq
      (git :variables
           git-gutter-use-fringe t)
      markdown
@@ -140,7 +141,7 @@ before layers configuration."
    dotspacemacs-loading-progress-bar t
    ;; If non nil the frame is fullscreen when Emacs starts up.
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-at-startup 1
    ;; If non nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX."
    dotspacemacs-fullscreen-use-non-native nil
@@ -298,6 +299,20 @@ layers configuration."
 
   (setq org-agenda-files (list "~/programming/vimtutor/manuscript/"))
 
+  (defun clean-sf-homework ()
+    (interactive)
+    (let* ((files '("chap1.v"))
+           (regex (mapconcat
+                   (function (lambda (name)
+                               (concat " && perl -0777  -pe 's/\\(\\*HIDE\\*\\).*?\\(\\*UHIDE\\*\\)//igs' " name " > " name ".sav")))
+                   files
+                   ""))
+           (cmd (concat "cd /home/jack/programming/software_foundations " regex)))
+      (shell-command cmd)))
+
+  (define-key global-map (kbd "<f10>") 'clean-sf-homework)
+
+
   (defun get-vim-pandoc-and-regex-command ()
     (let* ((files '("exercises-complex" "exercises-basic" "exercises-navigation" "exercises-regex"))
           (pandoc (mapconcat
@@ -307,7 +322,7 @@ layers configuration."
                    ""))
           (regex (mapconcat
                   (function (lambda (name)
-                              (concat " && perl -0777 -i.original -pe 's/\\|(\\s+\\|)+\\n\\|(-+\\|)+//igs' " name "-gen.txt" )))
+                              (concat " && perl -0777 -i -pe 's/\\|(\\s+\\|)+\\n\\|(-+\\|)+//igs' " name "-gen.txt" )))
                   files
                   "")))
       (concat pandoc regex)))
