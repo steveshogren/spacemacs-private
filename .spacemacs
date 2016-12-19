@@ -304,7 +304,7 @@ layers configuration."
     (let* ((files '("chap1.v"))
            (regex (mapconcat
                    (function (lambda (name)
-                               (concat " && perl -0777  -pe 's/\\(\\*HIDE\\*\\).*?\\(\\*UHIDE\\*\\)//igs' " name " > " name ".sav")))
+                               (concat " && perl -0777  -pe 'use MIME::Base64; s/(\\(\\*HIDE\\*\\).*?\\(\\*UHIDE\\*\\))/encode_base64($1)/eigs' " name " > " name ".sav")))
                    files
                    ""))
            (cmd (concat "cd /home/jack/programming/software_foundations " regex)))
