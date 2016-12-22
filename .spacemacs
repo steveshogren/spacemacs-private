@@ -304,7 +304,18 @@ layers configuration."
     (let* ((files '("chap1.v"))
            (regex (mapconcat
                    (function (lambda (name)
-                               (concat " && perl -0777  -pe 'use MIME::Base64; s/(\\(\\*HIDE\\*\\).*?\\(\\*UHIDE\\*\\))/encode_base64($1)/eigs' " name " > " name ".sav")))
+                               (concat " && perl -0777  -pe 'use MIME::Base64; s/(\\(\\*HIDE\\*\\))(.*?)(\\(\\*UHIDE\\*\\))/$1.encode_base64($2).$3/eigs' " name " > " name ".sav")))
+                   files
+                   ""))
+           (cmd (concat "cd /home/jack/programming/software_foundations " regex)))
+      (shell-command cmd)))
+
+  (defun unclean-sf-homework ()
+    (interactive)
+    (let* ((files '("chap1.v"))
+           (regex (mapconcat
+                   (function (lambda (name)
+                               (concat " && perl -0777  -pe 'use MIME::Base64; s/(\\(\\*HIDE\\*\\))(.*?)(\\(\\*UHIDE\\*\\))/$1.decode_base64($2).$3/eigs' " name ".sav > " name)))
                    files
                    ""))
            (cmd (concat "cd /home/jack/programming/software_foundations " regex)))
