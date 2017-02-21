@@ -93,12 +93,12 @@ before layers configuration."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         ujelly ;; 5 contrast -- yellowish and brown
                          cherry-blossom  ;; 5 contrast - pinkish
                          darkburn ;; 3.5 contrast, faded colors
                          gotham ;; 4 contrast kinda blueish
                          ;;darktooth -- 2 contrast -
                          badwolf ;; 4 contrast kinda reddish
-                         ujelly ;; 5 contrast -- yellowish and brown
                          sanityinc-tomorrow-bright ;; 4 contrast - red and yellow
                          ;; sanityinc-tomorrow-eighties ;; 2 contrast - red and yellow
                          deeper-blue ;; 4 contrast - blue and yellow
@@ -334,9 +334,12 @@ layers configuration."
     (let ((cmd (concat "cd /home/jack/programming/vimtutor/manuscript "
                        (get-vim-pandoc-and-regex-command))))
       (shell-command cmd))
-    (shell-command "cd /home/jack/programming/vimtutor && wc -w manuscript/*.txt | grep total"))
+    (shell-command (concat "cd /home/jack/programming/vimtutor "
+                           " && make clean-gen"
+                           " && wc -w manuscript/*.txt | grep total")))
 
   (define-key global-map (kbd "<f9>") 'wc-vim-book)
+  ;; restart wifi (sudo service network-manager restart)
 
   (defun dot-spacemacs-private-copy ()
     (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs")
