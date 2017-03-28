@@ -22,6 +22,8 @@
                       auto-completion-enable-company-help-tooltip t)
      better-defaults
      latex
+     typescript
+     yaml
      emacs-lisp
      coq
      (git :variables
