@@ -176,6 +176,8 @@ before layers configuration."
    ;; specified with an installed package.
    ;; Not used for now.
    dotspacemacs-default-package-repository nil
+
+   dotspacemacs-enable-paste-transient-state nil
    )
   ;; User initialization goes here
 
@@ -198,6 +200,10 @@ layers configuration."
 
   (add-to-list 'load-path "~/private/ox-leanpub")
   (require 'ox-leanpub)
+
+
+  ;;(remove-hook 'coq-mode-hook 'golden-ratio-mode)
+  (remove-hook 'haskell-mode-hook 'smartparens-mode)
 
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
   ;;(define-key clojure-mode-map (kbd "C-a") 'cider-find-var)
@@ -238,7 +244,7 @@ layers configuration."
   ;; SPC-k s/b slurp barf
   (setq sql-postgres-login-params
       '((user :default "postgres")
-        (database :default "swipes")
+        (database :default "school_crm")
         (server :default "localhost")
         (port :default 5432)))
   (add-hook 'sql-interactive-mode-hook
@@ -373,6 +379,7 @@ layers configuration."
        (add-to-list 'grep-find-ignored-directories ".git")
        (add-to-list 'grep-find-ignored-directories "target")
        (add-to-list 'grep-find-ignored-directories "node_modules")
+       (add-to-list 'grep-find-ignored-directories "bower_components")
        (add-to-list 'grep-find-ignored-directories "gen")
        (add-to-list 'grep-find-ignored-files "*.jar")
        (add-to-list 'grep-find-ignored-files "angular.js")
