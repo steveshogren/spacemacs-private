@@ -45,6 +45,7 @@
      ess
      restclient
      langtool
+     format-sql
      ;;fsharp
      ;;csharp
      racket
