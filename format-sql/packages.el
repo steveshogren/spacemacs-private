@@ -15,7 +15,7 @@
 (setq format-sql-packages
     '(
       ;; package names go here
-      format-sql
+      ;format-sql
       ))
 
 ;; List of packages to exclude.
@@ -25,12 +25,26 @@
 (defun format-sql/init-format-sql ()
   "Initialize my package"
     (use-package format-sql
+
         ; Use :mode to set language modes to automatically activate on certain extensions
         ; :defer t activates lazy loading which makes startup faster
         :defer t
         ; The code in :init is always run, use it to set up config vars and key bindings
         :init
         (progn ; :init only takes one expression so use "progn" to combine multiple things
+          (defun sql-beautify-region (beg end)
+            "Beautify SQL in region between beg and END."
+            (interactive "r")
+            (save-excursion
+              (shell-command-on-region beg end "pg_format" nil t)))
+
+          ;; change sqlbeautify to anbt-sql-formatter if you
+          ;;ended up using the ruby gem
+
+          (defun sql-beautify-buffer ()
+            "Beautify SQL in buffer."
+            (interactive)
+            (sql-beautify-region (point-min) (point-max)))
 
 ;;            (global-set-key "\M-n" 'langtool-goto-next-error)
         :config
