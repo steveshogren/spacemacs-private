@@ -36,7 +36,7 @@
             "Beautify SQL in region between beg and END."
             (interactive "r")
             (save-excursion
-              (shell-command-on-region beg end "pg_format" nil t)))
+              (shell-command-on-region beg end "pg_format -s 2" nil t)))
 
           ;; change sqlbeautify to anbt-sql-formatter if you
           ;;ended up using the ruby gem

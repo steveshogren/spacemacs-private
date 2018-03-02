@@ -24,6 +24,7 @@
      latex
      typescript
      yaml
+     awk
      emacs-lisp
      coq
      (git :variables
@@ -355,6 +356,8 @@ layers configuration."
     ;;(shell-command "cp /home/jack/.spacemacs /home/jack/private/.spacemacs ")
     )
 
+  (setq tab-width 4)
+  (setq-default tab-width 4)
   ;; to print out to the current buffer, use SPC-u M-! command
   ;; to simply execute, use M-! command
  (defun get-git-history ()
