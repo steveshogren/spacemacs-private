@@ -205,6 +205,9 @@ layers configuration."
 
 
   ;;(remove-hook 'coq-mode-hook 'golden-ratio-mode)
+
+  ;; to change the haskell mode for flycheck, use SPC e s and
+  ;; select either haskell-ghc or haskell-stack-ghc
   (remove-hook 'haskell-mode-hook 'smartparens-mode)
 
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
