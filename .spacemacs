@@ -209,6 +209,7 @@ layers configuration."
   ;; to change the haskell mode for flycheck, use SPC e s and
   ;; select either haskell-ghc or haskell-stack-ghc
   (remove-hook 'haskell-mode-hook 'smartparens-mode)
+  (remove-hook 'haskell-mode-hook 'flycheck-mode)
 
   (define-key global-map (kbd "C-M-h") 'pop-tag-mark)
   ;;(define-key clojure-mode-map (kbd "C-a") 'cider-find-var)
