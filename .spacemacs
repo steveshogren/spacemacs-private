@@ -327,6 +327,20 @@ layers configuration."
 
   (define-key global-map (kbd "<f10>") 'clean-sf-homework)
 
+  (define-key global-map (kbd "<f5>") 'copy-haskell-comment)
+  (defun copy-haskell-comment ()
+    (interactive)
+    ;;(evil-ex "s/^-- >>>//g")
+    (concat ":s/-- >>>//g" (kbd "RET"))
+
+;;    (haskell-interactive-copy-to-prompt)
+ ;;   (haskell-interactive-switch)
+    )
+
+  (add-hook 'haskell-mode-hook (lambda ()
+                                (setq flycheck-checker 'haskell-ghc
+                                      )))
+
 
   (defun get-vim-pandoc-and-regex-command ()
     (let* ((files '("exercises-complex" "exercises-basic" "exercises-navigation" "exercises-regex"))
