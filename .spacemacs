@@ -335,6 +335,7 @@ layers configuration."
 
     (haskell-interactive-copy-to-prompt)
     (haskell-interactive-switch)
+    (evil-goto-line)
     (evil-end-of-line)
     (haskell-interactive-mode-return)
     (haskell-interactive-switch-back)
