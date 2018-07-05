@@ -327,19 +327,18 @@ layers configuration."
 
   (define-key global-map (kbd "<f10>") 'clean-sf-homework)
 
-  (define-key global-map (kbd "<f5>") 'copy-haskell-comment)
+  (define-key haskell-mode-map (kbd "<f5>") 'copy-haskell-comment)
+
   (defun copy-haskell-comment ()
     (interactive)
-    (evil-ex "s/^-- >>>//g")
-    ;;(concat ":s/^-- >>>//g" (kbd "RET"))
 
     (haskell-interactive-copy-to-prompt)
     (haskell-interactive-switch)
     (evil-goto-line)
+    (replace-string "-- >>>" "" )
     (evil-end-of-line)
     (haskell-interactive-mode-return)
     (haskell-interactive-switch-back)
-    (undo-tree-undo)
     (spacemacs/evil-search-clear-highlight)
     )
 
