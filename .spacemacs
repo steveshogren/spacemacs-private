@@ -305,13 +305,6 @@ layers configuration."
   (setcar (nthcdr 2 org-emphasis-regexp-components) ",\"'")
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
 
-  (defun build-vim-book ()
-    (interactive)
-    (shell-command "cd /home/jack/programming/vimtutor && zip -r exercises.zip files"))
-
-  (define-key global-map (kbd "<f8>") 'build-vim-book)
-
-  (setq org-agenda-files (list "~/programming/vimtutor/manuscript/"))
 
   (defun clean-sf-homework ()
     (interactive)
@@ -339,13 +332,22 @@ layers configuration."
     (evil-end-of-line)
     (haskell-interactive-mode-return)
     (haskell-interactive-switch-back)
-    (spacemacs/evil-search-clear-highlight)
     )
 
   (add-hook 'haskell-mode-hook (lambda ()
                                 (setq flycheck-checker 'haskell-ghc
                                       )))
 
+
+;; VIM BOOK STUFF
+
+  (defun build-vim-book ()
+    (interactive)
+    (shell-command "cd /home/jack/programming/vimtutor && zip -r exercises.zip files"))
+
+  (define-key global-map (kbd "<f8>") 'build-vim-book)
+
+  (setq org-agenda-files (list "~/programming/vimtutor/manuscript/"))
 
   (defun get-vim-pandoc-and-regex-command ()
     (let* ((files '("exercises-complex" "exercises-basic" "exercises-navigation" "exercises-regex"))
@@ -371,7 +373,25 @@ layers configuration."
                            " && make clean-gen"
                            " && wc -w manuscript/*.txt | grep total")))
 
+
   (define-key global-map (kbd "<f9>") 'wc-vim-book)
+
+;; DATABASE BOOK STUFF
+  (defun build-vim-book ()
+    (interactive)
+    (shell-command "cd /home/jack/programming/vimtutor && zip -r exercises.zip files"))
+
+  (define-key global-map (kbd "<f8>") 'build-vim-book)
+
+  (defun wc-db-book ()
+    (interactive)
+    (build-db-book)
+    (let ((cmd (concat "cd /home/jack/programming/vimtutor/manuscript "
+                       (get-vim-pandoc-and-regex-command))))
+      (shell-command cmd))
+    (shell-command (concat "cd /home/jack/programming/vimtutor "
+                           " && make clean-gen"
+                           " && wc -w manuscript/*.txt | grep total")))
   ;; restart wifi (sudo service network-manager restart)
 
   (defun dot-spacemacs-private-copy ()
