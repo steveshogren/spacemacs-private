@@ -341,16 +341,16 @@ layers configuration."
 
 ;; VIM BOOK STUFF
 
-  (defun build-vim-book ()
+  (defun zip-vim-exercises ()
     (interactive)
     (shell-command "cd /home/jack/programming/vimtutor && zip -r exercises.zip files"))
 
-  (define-key global-map (kbd "<f8>") 'build-vim-book)
+  (define-key global-map (kbd "<f8>") 'zip-vim-exercises)
 
   (setq org-agenda-files (list "~/programming/vimtutor/manuscript/"))
 
-  (defun get-vim-pandoc-and-regex-command ()
-    (let* ((files '("exercises-complex" "exercises-basic" "exercises-navigation" "exercises-regex"))
+  (defun convert-org-to-md (files)
+    (let* (
           (pandoc (mapconcat
                    (function (lambda (name)
                                (concat " && pandoc -f org -t markdown_github -o " name "-gen.txt " name ".org")))
@@ -365,9 +365,11 @@ layers configuration."
 
   (defun wc-vim-book ()
     (interactive)
-    (build-vim-book)
+    (zip-vim-exercises)
     (let ((cmd (concat "cd /home/jack/programming/vimtutor/manuscript "
-                       (get-vim-pandoc-and-regex-command))))
+                       (convert-org-to-md
+                         '("exercises-complex" "exercises-basic" "exercises-navigation" "exercises-regex")
+                        ))))
       (shell-command cmd))
     (shell-command (concat "cd /home/jack/programming/vimtutor "
                            " && make clean-gen"
@@ -377,21 +379,22 @@ layers configuration."
   (define-key global-map (kbd "<f9>") 'wc-vim-book)
 
 ;; DATABASE BOOK STUFF
-  (defun build-vim-book ()
-    (interactive)
-    (shell-command "cd /home/jack/programming/vimtutor && zip -r exercises.zip files"))
-
-  (define-key global-map (kbd "<f8>") 'build-vim-book)
 
   (defun wc-db-book ()
     (interactive)
     (build-db-book)
-    (let ((cmd (concat "cd /home/jack/programming/vimtutor/manuscript "
-                       (get-vim-pandoc-and-regex-command))))
+    (let ((cmd (concat "cd /home/jack/programming/database-book/manuscript "
+                       (convert-org-to-md
+                        '("chapter1")
+                        ))))
       (shell-command cmd))
-    (shell-command (concat "cd /home/jack/programming/vimtutor "
+    (shell-command (concat "cd /home/jack/programming/database-book "
                            " && make clean-gen"
                            " && wc -w manuscript/*.txt | grep total")))
+
+
+;; MISC
+
   ;; restart wifi (sudo service network-manager restart)
 
   (defun dot-spacemacs-private-copy ()
