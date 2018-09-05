@@ -350,17 +350,16 @@ layers configuration."
   (setq org-agenda-files (list "~/programming/vimtutor/manuscript/"))
 
   (defun convert-org-to-md (files)
-    (let* (
-          (pandoc (mapconcat
+    (let* ((pandoc (mapconcat
+                    (function (lambda (name)
+                                (concat " && pandoc -f org -t markdown_github -o " name "-gen.txt " name ".org")))
+                    files
+                    ""))
+           (regex (mapconcat
                    (function (lambda (name)
-                               (concat " && pandoc -f org -t markdown_github -o " name "-gen.txt " name ".org")))
+                               (concat " && perl -0777 -i -pe 's/\\|(\\s+\\|)+\\n\\|(-+\\|)+//igs' " name "-gen.txt" )))
                    files
-                   ""))
-          (regex (mapconcat
-                  (function (lambda (name)
-                              (concat " && perl -0777 -i -pe 's/\\|(\\s+\\|)+\\n\\|(-+\\|)+//igs' " name "-gen.txt" )))
-                  files
-                  "")))
+                   "")))
       (concat pandoc regex)))
 
   (defun wc-vim-book ()
@@ -376,22 +375,22 @@ layers configuration."
                            " && wc -w manuscript/*.txt | grep total")))
 
 
-  (define-key global-map (kbd "<f9>") 'wc-vim-book)
 
 ;; DATABASE BOOK STUFF
 
   (defun wc-db-book ()
     (interactive)
-    (build-db-book)
-    (let ((cmd (concat "cd /home/jack/programming/database-book/manuscript "
+    (let ((cmd (concat "cd /home/jack/programming/database-book/source "
                        (convert-org-to-md
                         '("chapter1")
-                        ))))
+                        )
+                       " && cp *.txt ../manuscript/.")))
       (shell-command cmd))
     (shell-command (concat "cd /home/jack/programming/database-book "
-                           " && make clean-gen"
-                           " && wc -w manuscript/*.txt | grep total")))
+                           " && wc -w manuscript/*.txt | grep total"))
+    )
 
+  (define-key global-map (kbd "<f9>") 'wc-db-book)
 
 ;; MISC
 
