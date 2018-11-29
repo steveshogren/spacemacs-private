@@ -22,6 +22,7 @@
                       auto-completion-enable-company-help-tooltip t)
      better-defaults
      latex
+     rust
      typescript
      yaml
      awk
@@ -145,14 +146,14 @@ before layers configuration."
    dotspacemacs-loading-progress-bar t
    ;; If non nil the frame is fullscreen when Emacs starts up.
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup 1
+   dotspacemacs-fullscreen-at-startup nil
    ;; If non nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX."
    dotspacemacs-fullscreen-use-non-native nil
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup t
+   dotspacemacs-maximized-at-startup 1
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'.
@@ -320,7 +321,7 @@ layers configuration."
 
   (define-key global-map (kbd "<f10>") 'clean-sf-homework)
 
-  (define-key haskell-mode-map (kbd "<f5>") 'copy-haskell-comment)
+  ;; (define-key haskell-mode-map (kbd "<f5>") 'copy-haskell-comment)
 
   (defun copy-haskell-comment ()
     (interactive)
@@ -384,7 +385,9 @@ layers configuration."
                        (convert-org-to-md
                         '("chapter1")
                         )
-                       " && cp *.txt ../manuscript/.")))
+                       " && cp *.txt ../manuscript/."
+                       " && rm *.txt"
+                       )))
       (shell-command cmd))
     (shell-command (concat "cd /home/jack/programming/database-book "
                            " && wc -w manuscript/*.txt | grep total"))
@@ -392,14 +395,30 @@ layers configuration."
 
   (define-key global-map (kbd "<f9>") 'wc-db-book)
 
+  (defun sudo-shell-command (command)
+    (interactive "MShell command (root): ")
+    (with-temp-buffer
+      (cd "/sudo::/")
+      (async-shell-command command)))
+
+  ;; fix touchpad mouse scroll
+  (defun fix-touch-pad ()
+    (sudo-shell-command (concat "sudo modprobe -r psmouse"
+                           " && sudo modprobe psmouse"))
+    )
+
 ;; MISC
 
   ;; restart wifi (sudo service network-manager restart)
+
 
   (defun dot-spacemacs-private-copy ()
     (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs")
     ;;(shell-command "cp /home/jack/.spacemacs /home/jack/private/.spacemacs ")
     )
+
+  ;; copy from private on startup
+  (shell-command "cp /home/jack/private/.spacemacs /home/jack/.spacemacs")
 
   (setq tab-width 4)
   (setq-default tab-width 4)
